@@ -23,9 +23,9 @@ class App extends React.Component {
 
   onDragUpdate = update => {
     const { destination } = update;
-    // const opacity = destination
-    //   ? destination.index / Object.keys(this.state.tasks).length : 0;
-    // document.body.style.background = `rgba(153,141,217,${opacity})`;
+    const opacity = destination
+      ? destination.index / Object.keys(this.state.tasks).length : 0;
+    document.body.style.background = `rgba(153,141,217,${opacity})`;
   }
 
   onDragEnd = result => {
