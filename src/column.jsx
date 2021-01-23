@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Droppable } from 'react-beautiful-dnd';
+import { Droppable ,Draggable } from 'react-beautiful-dnd';
 import Task from './task';
 
 
@@ -28,9 +28,11 @@ min-height: 100px;
 export default class Column extends React.Component {
     render() {
         return (
-            <Container>
-                <Title>{this.props.column.title}</Title>
-                <Droppable droppableId={this.props.column.id}>
+            <Draggable draggableId={this.props.column.id} index={this.props.index} >
+                {provided => (
+            <Container {...provided.draggableProps} ref={provided.innerRef}>
+                <Title {...provided.dragHandleProps}>{this.props.column.title}</Title>
+                <Droppable droppableId={this.props.column.id} type="task">
                     {(provided, snapshot) => (
                         <TaskList ref={provided.innerRef}  {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver} >
                             {this.props.tasks.map((task, index) => <Task key={task.id} task={task} index={index} />)}
@@ -39,6 +41,8 @@ export default class Column extends React.Component {
                     )}
                 </Droppable>
             </Container>
+            )}
+            </Draggable>
         );
 
     }
